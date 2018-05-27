@@ -69,6 +69,7 @@ for kf=1.20:0.25:1.50 % vary partitioning coefficient (mL/mg)
         format = '%5.5f, %3.5f\n';
         fprintf(file, format, t, dMR);
         end
+        fprintf(file,'\n');
     end
 end
 fclose(file); % close file
