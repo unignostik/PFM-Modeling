@@ -25,37 +25,36 @@ pb = 0.52*1000; % bulk density of sorptive matrix (mg/mL)
 tFinal = 10; % total time of deployment (hr)
 dt = .5; % time increment (hr)
 
-% tracer properties
 cInit = 1000; % inital concentration (mg/L)
-kf = 1.20; % tracer-sorbent partitioning coefficient (mL/mg)
-rd = (p+pb*kf*cInit.^(m-1))/p; % retardation factor
-
 mInitPFM = 0; % variable declaration for initial mass in PFM (mg)
 
-for m=0.05: 0.05: 1 % vary Fruendlich exponent 
-    for t=0:dt:tFinal % iterate through time by increments of dt
-        mRPFM = 0; % reset mass in PFM at time t
-        vc = p*v/(p+pb*kf*m*cInit.^(m-1)); % fluid velocity at given concentration
-        xb = vc*t; % position of fluid at time t
-
-        for tube=1:sMax % iterate through each streamtube 
-            y = (tube-1)*dy; % distance of streamtube from center of PFM (cm)
-            xd = 2*(rPFM.^2 - y.^2).^(1/2); % length of given streamtube (cm)
-
-            mInit = (cInit/1000)*p*zPFM*dy*xd; % initial mass in streamtube (mg)
-
-            if xb<xd % position inside stream tube
-                 % add trapazoidal approx. for integral of C(x,t)dx; mass remaining in streamtube (mg)
-            else
-                 % add trapazoidal approx. for integral of C(x,t)dx; mass remaining in streamtube (mg)
+for kf=1.20:0.25:1.50 % vary partitioning coefficient (mL/mg)
+    for m=0.05:0.05:1.00 % vary Fruendlich exponent 
+    rd = (p+pb*kf*cInit.^(m-1))/p; % retardation factor
+    
+        for t=0:dt:tFinal % iterate through time by increments of dt
+            mRPFM = 0; % reset mass in PFM at time t
+            vc = p*v/(p+pb*kf*m*cInit.^(m-1)); % fluid velocity at given concentration
+            xb = vc*t; % position of fluid at time t
+            
+            for tube=1:sMax % iterate through each streamtube 
+                y = (tube-1)*dy; % distance of streamtube from center of PFM (cm)
+                xd = 2*(rPFM.^2 - y.^2).^(1/2); % length of given streamtube (cm)
+                mInit = (cInit/1000)*p*zPFM*dy*xd; % initial mass in streamtube (mg)
+                
+                if xb<xd % position inside stream tube
+                     % mass remaining in streamtube (mg)
+                else
+                     % mass remaining in streamtube (mg)
+                end
+                
+                mInitPFM = mInitPFM + mInit; % initial mass in PFM (mg)
+                mRPFM = mRPFM + mRtube; % mass remaining in PFM at time t (mg)
             end 
-
-            mInitPFM = mInitPFM + mInit; % initial mass in PFM (mg)
-            mRPFM = mRPFM + mRtube; % mass remaining in PFM at time t (mg)
-        end 
-    dMR = (mRPFM/mInitPFM); % dimensionless mass remaining in PFM
-    % display data
-    disp(t); 
-    disp(dMR);
+        dMR = (mRPFM/mInitPFM); % dimensionless mass remaining in PFM
+        % display data
+        disp(t); 
+        disp(dMR);
+        end
     end
 end
