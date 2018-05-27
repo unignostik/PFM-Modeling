@@ -5,5 +5,9 @@ Linear script
  --------------------------------------------------
  
  Freundlich script
- (5-25-2018)
+ (5-26-2018)
   - initial build
+ 
+ (5-27-2018)
+  - make kf values variable 
+  - script output is written to unique .csv files instead of displayed to console
