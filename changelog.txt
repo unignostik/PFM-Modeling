@@ -11,3 +11,4 @@ Linear script
  (5-27-2018)
   - make kf values variable 
   - script output is written to unique .csv files instead of displayed to console
+  - added marks and cleaned up comments and code for better readability 
