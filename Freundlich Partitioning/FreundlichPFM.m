@@ -13,7 +13,7 @@ clc(); % clear console
 rPFM = 1; % radius of PFM (cm)
 zPFM = 1; % height of PFM (cm)
 sMax = 10; % number of streamtubes in PFM
-dy = rPFM/sMax; % width of stream tube (cm)
+dy = rPFM/sMax; % width of streamtube (cm)
 
 % sorbent matrix properties 
 v = 2.00; % seepage velocity (cm/hr)
