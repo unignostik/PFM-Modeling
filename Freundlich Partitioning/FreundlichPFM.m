@@ -58,6 +58,9 @@ for kf=1.20:0.25:1.50 % vary partitioning coefficient (mL/mg)
                 mInit = (cInit/1000)*p*zPFM*dy*xd; % initial mass in streamtube (mg)
                 if xb<xd % position inside stream tube
                      % mass remaining in streamtube (mg)
+                     c = (n*v*t-n*x)/(pd*k*m*x).^(1/m-1)
+                    mRtube = integral(c,0,xd)
+                    mRtube += mRtube
                 else
                      % mass remaining in streamtube (mg)
                 end
