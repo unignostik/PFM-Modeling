@@ -1,7 +1,7 @@
 %
 % Author: Chase Tillar
 % Build Date: 05/26/2018
-% Last Update: 05/27/2018
+% Last Update: 07/12/2018
 % Description: Model the PFM elution curve assuming retardation of the
 % tracer on the PFM sorbent is goverend by Fruendlich partitioning processes;
 % the elution curve represents the dimensionless mass remaining in the PFM
@@ -59,10 +59,12 @@ for kf=1.20:0.25:1.50 % vary partitioning coefficient (mL/mg)
                 if xb<xd % position inside stream tube
                      % mass remaining in streamtube (mg)
                      c = (n*v*t-n*x)/(pd*k*m*x).^(1/m-1)
-                    mRtube = integral(c,0,xd)
+                    mRtube = z*dy*n*integral(c,0,xd)+pb*kf*integral(c.^m,0,xd)+(p*cInit+pb*kf*(cInit).^m)*(xd-xb)
                     mRtube += mRtube
                 else
                      % mass remaining in streamtube (mg)
+                     mRtube = z*dy*n*integral(c,0,xd)+pb*kf*integral(c.^m,0,xd)
+                     mRtube += mRtube
                 end
                 mInitPFM = mInitPFM + mInit; % initial mass in PFM (mg)
                 mRPFM = mRPFM + mRtube; % mass remaining in PFM at time t (mg)
